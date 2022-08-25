@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
-  root 'static#index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  namespace :v1, defaults: { format:'json' } do
-    get 'things', to: 'things#index'
+  Rails.application.routes.draw do
+    root "greetings#index"
+
+    namespace :api do
+      namespace :v1 do
+        resources :greettings, only: [:index]
+      end
+    end
+
+    get "*path", to: "greetings#index", via: :all
   end
 end
